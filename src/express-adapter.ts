@@ -6,7 +6,7 @@ import { HttpAdapter, RequestHandler } from '@hemtypes/http-adapter';
 export default class ExpressAdapter implements HttpAdapter {
   protected httpServer: any;
 
-  constructor(private instance: any = express()) {}
+  constructor(protected instance: any = express()) {}
 
   public use(...args: any[]) {
     return this.instance.use(...args);
