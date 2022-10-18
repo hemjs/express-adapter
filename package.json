@@ -38,13 +38,13 @@
     "rimraf": "3.0.2",
     "typescript": "4.8.4"
   },
-  "homepage": "https://github.com/hemjs/container#readme",
+  "homepage": "https://github.com/hemjs/express-adapter#readme",
   "bugs": {
-    "url": "https://github.com/hemjs/container/issues"
+    "url": "https://github.com/hemjs/express-adapter/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hemjs/container.git"
+    "url": "git+https://github.com/hemjs/express-adapter.git"
   },
   "publishConfig": {
     "access": "public"
