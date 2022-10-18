@@ -1,7 +1,7 @@
-import { HttpAdapter, RequestHandler } from '@hemtypes/http-adapter';
 import * as http from 'http';
 import * as https from 'https';
 import * as express from 'express';
+import { HttpAdapter, RequestHandler } from '@hemtypes/http-adapter';
 
 export default class ExpressAdapter implements HttpAdapter {
   protected httpServer: any;
