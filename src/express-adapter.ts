@@ -2,9 +2,12 @@ import * as http from 'http';
 import * as https from 'https';
 import * as express from 'express';
 import { HttpAdapter, RequestHandler } from '@hemtypes/http-adapter';
+import { Duplex } from 'stream';
+import type { Server } from 'net';
 
 export default class ExpressAdapter implements HttpAdapter {
   protected httpServer: any;
+  private readonly openConnections = new Set<Duplex>();
 
   constructor(protected instance: any = express()) {}
 
@@ -60,9 +63,13 @@ export default class ExpressAdapter implements HttpAdapter {
     return this.instance.options(...args);
   }
 
-  public listen(port: string | number, callback?: () => void): any;
-  public listen(port: number, hostname: string, callback?: () => void): any;
-  public listen(port: any, ...args: any[]) {
+  public listen(port: string | number, callback?: () => void): Server;
+  public listen(
+    port: string | number,
+    hostname: string,
+    callback?: () => void,
+  ): Server;
+  public listen(port: any, ...args: any[]): Server {
     return this.httpServer.listen(port, ...args);
   }
 
@@ -108,14 +115,19 @@ export default class ExpressAdapter implements HttpAdapter {
 
   public initHttpServer(options: any) {
     const isHttpsEnabled = options && options.httpsOptions;
+
     if (isHttpsEnabled) {
       this.httpServer = https.createServer(
         options.httpsOptions,
         this.getInstance(),
       );
-      return;
+    } else {
+      this.httpServer = http.createServer(this.getInstance());
     }
-    this.httpServer = http.createServer(this.getInstance());
+
+    if (options?.forceCloseConnections) {
+      this.trackOpenConnections();
+    }
   }
 
   public getType(): string {
@@ -123,9 +135,12 @@ export default class ExpressAdapter implements HttpAdapter {
   }
 
   public close() {
+    this.closeOpenConnections();
+
     if (!this.httpServer) {
       return undefined;
     }
+
     return new Promise((resolve) => this.httpServer.close(resolve));
   }
 
@@ -174,5 +189,20 @@ export default class ExpressAdapter implements HttpAdapter {
 
   public getRequestUrl(request: any): string {
     return request.originalUrl;
+  }
+
+  private trackOpenConnections() {
+    this.httpServer.on('connection', (socket: Duplex) => {
+      this.openConnections.add(socket);
+
+      socket.on('close', () => this.openConnections.delete(socket));
+    });
+  }
+
+  private closeOpenConnections() {
+    for (const socket of this.openConnections) {
+      socket.destroy();
+      this.openConnections.delete(socket);
+    }
   }
 }
