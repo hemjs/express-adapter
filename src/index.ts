@@ -1,1 +1,1 @@
-export { default as ExpressAdapter } from './express-adapter';
+export * from './express-adapter';
