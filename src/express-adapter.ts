@@ -5,7 +5,7 @@ import { HttpAdapter, RequestHandler } from '@hemtypes/http-adapter';
 import { Duplex } from 'stream';
 import type { Server } from 'net';
 
-export default class ExpressAdapter implements HttpAdapter {
+export class ExpressAdapter implements HttpAdapter {
   protected httpServer: any;
   private readonly openConnections = new Set<Duplex>();
 
