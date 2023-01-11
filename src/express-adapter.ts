@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as https from 'https';
 import * as express from 'express';
-import { HttpAdapter, RequestHandler } from '@hemtypes/http-adapter';
+import { HttpAdapter, HandlerArgument } from '@hemtypes/http-adapter';
 import { Duplex } from 'stream';
 import type { Server } from 'net';
 
@@ -15,50 +15,50 @@ export class ExpressAdapter implements HttpAdapter {
     return this.instance.use(...args);
   }
 
-  public get(handler: RequestHandler | RequestHandler[]): any;
-  public get(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public get(handler: HandlerArgument): any;
+  public get(path: any, handler: HandlerArgument): any;
   public get(...args: any[]) {
     return this.instance.get(...args);
   }
 
-  public post(handler: RequestHandler | RequestHandler[]): any;
-  public post(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public post(handler: HandlerArgument): any;
+  public post(path: any, handler: HandlerArgument): any;
   public post(...args: any[]) {
     return this.instance.post(...args);
   }
 
-  public head(handler: RequestHandler | RequestHandler[]): any;
-  public head(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public head(handler: HandlerArgument): any;
+  public head(path: any, handler: HandlerArgument): any;
   public head(...args: any[]) {
     return this.instance.head(...args);
   }
 
-  public delete(handler: RequestHandler | RequestHandler[]): any;
-  public delete(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public delete(handler: HandlerArgument): any;
+  public delete(path: any, handler: HandlerArgument): any;
   public delete(...args: any[]) {
     return this.instance.delete(...args);
   }
 
-  public put(handler: RequestHandler | RequestHandler[]): any;
-  public put(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public put(handler: HandlerArgument): any;
+  public put(path: any, handler: HandlerArgument): any;
   public put(...args: any[]) {
     return this.instance.put(...args);
   }
 
-  public patch(handler: RequestHandler | RequestHandler[]): any;
-  public patch(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public patch(handler: HandlerArgument): any;
+  public patch(path: any, handler: HandlerArgument): any;
   public patch(...args: any[]) {
     return this.instance.patch(...args);
   }
 
-  public all(handler: RequestHandler | RequestHandler[]): any;
-  public all(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public all(handler: HandlerArgument): any;
+  public all(path: any, handler: HandlerArgument): any;
   public all(...args: any[]) {
     return this.instance.all(...args);
   }
 
-  public options(handler: RequestHandler | RequestHandler[]): any;
-  public options(path: any, handler: RequestHandler | RequestHandler[]): any;
+  public options(handler: HandlerArgument): any;
+  public options(path: any, handler: HandlerArgument): any;
   public options(...args: any[]) {
     return this.instance.options(...args);
   }
